@@ -8,7 +8,7 @@ export class CdkgluetablePartitionStack extends cdk.Stack {
     
     const PREFIX_NAME = id.toLocaleLowerCase().replace('stack', '');
     const S3_DATA_DIR = "data";
-    const GLUE_DATABASE_ARN = "arn:aws:glue:ap-northeast-1:000000:database/default";
+    const GLUE_DATABASE_ARN = "arn:aws:glue:ap-northeast-1:00000000:database/default";
       
     const bucket = new s3.Bucket(this, "bucket", {
       bucketName: PREFIX_NAME + '-bucket'
@@ -22,7 +22,7 @@ export class CdkgluetablePartitionStack extends cdk.Stack {
 
     const table = new glue.Table(this, "table", {
       database: database,
-      tableName: PREFIX_NAME + '-table',
+      tableName: PREFIX_NAME + '_table', // Athena doesn't support -.
       columns: [
         {
           name: "id",
@@ -33,7 +33,7 @@ export class CdkgluetablePartitionStack extends cdk.Stack {
           type: glue.Schema.TIMESTAMP,
         },
         {
-          name: "name",
+          name: "action",
           type: glue.Schema.STRING,
         },
         {
