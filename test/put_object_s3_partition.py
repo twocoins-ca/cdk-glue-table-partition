@@ -1,5 +1,4 @@
 import boto3
-from faker import Faker
 import json
 import random
 from datetime import datetime, timedelta
