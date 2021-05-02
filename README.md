@@ -5,4 +5,4 @@ To deploy a partitioned table on Glue.
 * `npm install`
 * `cdk deploy`
 
-[description](https://figmentresearch.com/aws/cdkgluetable-partition)
+[description](https://note.figmentresearch.com/aws/cdkgluetable-partition)
