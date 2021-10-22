@@ -8,10 +8,17 @@ export class CdkgluetablePartitionStack extends cdk.Stack {
     
     const PREFIX_NAME = id.toLocaleLowerCase().replace('stack', '');
     const S3_DATA_DIR = "data";
-    const GLUE_DATABASE_ARN = "arn:aws:glue:ap-northeast-1:00000000:database/default";
+    const GLUE_DATABASE_ARN = "arn:aws:glue:ca-central-1:657887547478:database/glue-workflow-db";
       
     const bucket = new s3.Bucket(this, "bucket", {
-      bucketName: PREFIX_NAME + '-bucket'
+      bucketName: PREFIX_NAME + '-bucket',
+      encryption: s3.BucketEncryption.KMS_MANAGED,
+			publicReadAccess: false,
+			blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+			enforceSSL: true,
+			versioned: true,
+			removalPolicy: cdk.RemovalPolicy.DESTROY,
+			autoDeleteObjects: false
     });
     
     const database = glue.Database.fromDatabaseArn(
