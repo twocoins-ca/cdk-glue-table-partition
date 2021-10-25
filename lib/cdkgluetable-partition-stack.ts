@@ -27,8 +27,9 @@ export class CdkgluetablePartitionStack extends cdk.Stack {
       GLUE_DATABASE_ARN
     );
 
-    const table = new glue.Table(this, "table", {
+    const gluetable = new glue.Table(this, "table", {
       database: database,
+      description: PREFIX_NAME + '_table'+ 'description',
       tableName: PREFIX_NAME + '_table', // Athena doesn't support -.
       columns: [
         {
@@ -59,7 +60,13 @@ export class CdkgluetablePartitionStack extends cdk.Stack {
       ],
       dataFormat: glue.DataFormat.JSON,
       bucket: bucket,
-      s3Prefix: S3_DATA_DIR,
+
     });
+    // cdk.Tags.of(table).add('from', 'ottawa');
+    const cfngluetable = gluetable.node.defaultChild as glue.CfnTable;
+    cfngluetable.addPropertyOverride('TableInput.Parameters.Domain', 'Ottawa');
+    cfngluetable.addPropertyOverride('TableInput.Parameters.Owner', 'CDK Tiger team');
+
+
   }
 }
